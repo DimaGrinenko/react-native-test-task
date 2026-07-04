@@ -7,16 +7,18 @@ import { HistoryScreen } from './src/screens/HistoryScreen';
 import { MapScreen } from './src/screens/MapScreen';
 import { SettingsScreen } from './src/screens/SettingsScreen';
 import { TaskListScreen } from './src/screens/TaskListScreen';
-import { lightTheme } from './src/theme';
+import { darkTheme, lightTheme } from './src/theme';
 
 type Tab = 'tasks' | 'map' | 'history' | 'settings';
 
 export default function App() {
   const [tab, setTab] = useState<Tab>('tasks');
+  const tema = useZadachiStore(s => s.tema);
   const syncSt = useZadachiStore(s => s.syncSt);
   const toast = useZadachiStore(s => s.toast);
   const clearToast = useZadachiStore(s => s.clearToast);
-  const colors = lightTheme;
+  const colors = tema === 'dark' ? darkTheme : lightTheme;
+  const dark = tema === 'dark';
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
@@ -30,9 +32,9 @@ export default function App() {
 
       <View style={styles.content}>
         {tab === 'tasks' && <TaskListScreen colors={colors} />}
-        {tab === 'map' && <MapScreen />}
-        {tab === 'history' && <HistoryScreen />}
-        {tab === 'settings' && <SettingsScreen />}
+        {tab === 'map' && <MapScreen colors={colors} dark={dark} />}
+        {tab === 'history' && <HistoryScreen colors={colors} dark={dark} />}
+        {tab === 'settings' && <SettingsScreen colors={colors} dark={dark} />}
       </View>
 
       <View style={[styles.tabs, { backgroundColor: colors.card, borderTopColor: colors.border }]}>
@@ -78,7 +80,7 @@ export default function App() {
         </View>
       )}
 
-      <StatusBar style="auto" />
+      <StatusBar style={dark ? 'light' : 'dark'} />
     </SafeAreaView>
   );
 }

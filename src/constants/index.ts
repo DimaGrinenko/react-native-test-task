@@ -26,9 +26,23 @@ export const MESTA_PRESET = [
   { nazvanie: 'Больница', adres: 'ул. Профсоюзная 12', lat: 55.67, lng: 37.55 },
 ];
 
+export const ACTION_LABELS: Record<string, string> = {
+  created: 'Создание',
+  updated: 'Изменение',
+  status_changed: 'Статус',
+  attachment_added: 'Вложение',
+  attachment_removed: 'Удаление вложения',
+  deleted: 'Удаление',
+  synced: 'Синхронизация',
+  sync_failed: 'Ошибка синхронизации',
+};
+
 export const SYNC_STATUS_LABELS: Record<string, string> = {
   pending: 'Ожидает',
   syncing: 'Синхронизация…',
   synced: 'Синхронизировано',
   failed: 'Ошибка',
 };
+
+export { darkTheme as darkColors, lightTheme as lightColors, ACTION_ICONS } from '../theme';
+export type { ThemeColors } from '../theme';

@@ -1,3 +1,5 @@
+import type { TaskStatus } from '../types/task';
+
 export type ThemeColors = {
   bg: string;
   bgAlt: string;
@@ -38,4 +40,36 @@ export const lightTheme: ThemeColors = {
   input: '#F8FAFC',
   shadow: '#6366F1',
   overlay: 'rgba(15, 23, 42, 0.45)',
+};
+
+export const darkTheme: ThemeColors = {
+  bg: '#0B1120',
+  bgAlt: '#111827',
+  card: '#1A2235',
+  text: '#F1F5F9',
+  sub: '#94A3B8',
+  primary: '#818CF8',
+  primarySoft: '#1E1B4B',
+  accent: '#FB923C',
+  border: '#2D3748',
+  danger: '#F87171',
+  ok: '#34D399',
+  warning: '#FBBF24',
+  headerFrom: '#312E81',
+  headerTo: '#581C87',
+  tabBar: '#111827',
+  input: '#0F172A',
+  shadow: '#000000',
+  overlay: 'rgba(0, 0, 0, 0.6)',
+};
+
+export const ACTION_ICONS: Record<string, string> = {
+  created: '✨',
+  updated: '✏️',
+  status_changed: '🔄',
+  attachment_added: '📎',
+  attachment_removed: '🗑️',
+  deleted: '❌',
+  synced: '☁️',
+  sync_failed: '⚠️',
 };
