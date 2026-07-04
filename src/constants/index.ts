@@ -18,3 +18,17 @@ export const STORAGE_KEYS = {
 } as const;
 
 export const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL ?? 'http://10.0.2.2:3000';
+
+export const MESTA_PRESET = [
+  { nazvanie: 'Офис', adres: 'ул. Ленина 10, Москва', lat: 55.7558, lng: 37.6173 },
+  { nazvanie: 'Склад', adres: 'пр. Мира 25, Москва', lat: 55.79, lng: 37.63 },
+  { nazvanie: 'Объект А', adres: 'ул. Садовая 5, Москва', lat: 55.74, lng: 37.6 },
+  { nazvanie: 'Больница', adres: 'ул. Профсоюзная 12', lat: 55.67, lng: 37.55 },
+];
+
+export const SYNC_STATUS_LABELS: Record<string, string> = {
+  pending: 'Ожидает',
+  syncing: 'Синхронизация…',
+  synced: 'Синхронизировано',
+  failed: 'Ошибка',
+};
