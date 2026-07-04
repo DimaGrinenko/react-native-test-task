@@ -9,99 +9,79 @@ import { SettingsScreen } from './src/screens/SettingsScreen';
 import { TaskListScreen } from './src/screens/TaskListScreen';
 import { darkTheme, lightTheme } from './src/theme';
 
-type Tab = 'tasks' | 'map' | 'history' | 'settings';
+type Vkladka = 'tasks' | 'map' | 'history' | 'settings';
 
 export default function App() {
-  const [tab, setTab] = useState<Tab>('tasks');
+  const [aktivnayaVkladka, setAktivnayaVkladka] = useState<Vkladka>('tasks');
   const tema = useZadachiStore(s => s.tema);
   const syncSt = useZadachiStore(s => s.syncSt);
   const toast = useZadachiStore(s => s.toast);
-  const clearToast = useZadachiStore(s => s.clearToast);
-  const colors = tema === 'dark' ? darkTheme : lightTheme;
-  const dark = tema === 'dark';
+  const ubratToast = useZadachiStore(s => s.clearToast);
+
+  const cveta = tema === 'dark' ? darkTheme : lightTheme;
+  const temnyi = tema === 'dark';
+
+  let soderzhimoe = null;
+  if (aktivnayaVkladka === 'tasks') soderzhimoe = <TaskListScreen colors={cveta} dark={temnyi} />;
+  else if (aktivnayaVkladka === 'map') soderzhimoe = <MapScreen colors={cveta} dark={temnyi} />;
+  else if (aktivnayaVkladka === 'history') soderzhimoe = <HistoryScreen colors={cveta} dark={temnyi} />;
+  else soderzhimoe = <SettingsScreen colors={cveta} dark={temnyi} />;
+
+  const knopkiVkladok: {id: Vkladka, bukva: string}[] = [
+    {id:'tasks', bukva:'Задачи'},
+    {id:'map', bukva:'Карта'},
+    {id:'history', bukva:'История'},
+    {id:'settings', bukva:'Настройки'},
+  ];
 
   return (
-    <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
-      <View style={[styles.header, { backgroundColor: colors.headerFrom }]}>
-        <Text style={styles.headerTitle}>Полевые задачи</Text>
-        <Text style={styles.headerCode}>{CANDIDATE_CODE}</Text>
-        <Text style={styles.syncTxt}>
-          Синхронизация: {SYNC_STATUS_LABELS[syncSt] ?? syncSt}
-        </Text>
+    <SafeAreaView style={{flex:1, backgroundColor: cveta.bg}}>
+      <View style={[styles.shapka, {backgroundColor: cveta.headerFrom}]}>
+        <Text style={styles.zagolovok}>Полевые задачи</Text>
+        <Text style={styles.kod}>{CANDIDATE_CODE}</Text>
+        <Text style={styles.syncTxt}>Синхронизация: {SYNC_STATUS_LABELS[syncSt] ?? syncSt}</Text>
       </View>
 
-      <View style={styles.content}>
-        {tab === 'tasks' && <TaskListScreen colors={colors} />}
-        {tab === 'map' && <MapScreen colors={colors} dark={dark} />}
-        {tab === 'history' && <HistoryScreen colors={colors} dark={dark} />}
-        {tab === 'settings' && <SettingsScreen colors={colors} dark={dark} />}
-      </View>
+      <View style={{flex:1}}>{soderzhimoe}</View>
 
-      <View style={[styles.tabs, { backgroundColor: colors.card, borderTopColor: colors.border }]}>
-        {(
-          [
-            ['tasks', 'Задачи'],
-            ['map', 'Карта'],
-            ['history', 'История'],
-            ['settings', 'Настройки'],
-          ] as const
-        ).map(([id, label]) => (
+      <View style={[styles.tabBar, {backgroundColor: cveta.card, borderColor: cveta.border}]}>
+        {knopkiVkladok.map(knopka => (
           <TouchableOpacity
-            key={id}
-            accessibilityRole="button"
-            accessibilityLabel={label}
-            onPress={() => setTab(id)}
-            style={[styles.tab, tab === id && { borderTopColor: colors.primary, borderTopWidth: 3 }]}
+            key={knopka.id}
+            onPress={() => setAktivnayaVkladka(knopka.id)}
+            style={[styles.tabKn, aktivnayaVkladka===knopka.id && {borderTopColor: cveta.primary, borderTopWidth: 3}]}
           >
-            <Text
-              style={{
-                fontSize: 13,
-                fontWeight: tab === id ? '700' : '600',
-                color: tab === id ? colors.primary : colors.sub,
-              }}
-            >
-              {label}
+            <Text style={{color: aktivnayaVkladka===knopka.id ? cveta.primary : cveta.sub, fontSize: 12, fontWeight: aktivnayaVkladka===knopka.id ? '700':'500'}}>
+              {knopka.bukva}
             </Text>
           </TouchableOpacity>
         ))}
       </View>
 
       {toast && (
-        <View
-          style={[
-            styles.toast,
-            { backgroundColor: toast.type === 'error' ? colors.danger : colors.ok },
-          ]}
-        >
-          <Text style={{ color: '#fff', fontWeight: '600', flex: 1 }}>{toast.msg}</Text>
-          <TouchableOpacity onPress={clearToast}>
-            <Text style={{ color: '#fff' }}>×</Text>
+        <View style={[styles.toast, {backgroundColor: toast.type==='error' ? cveta.danger : cveta.ok}]}>
+          <Text style={{color:'#fff', fontWeight:'600'}}>{toast.msg}</Text>
+          <TouchableOpacity onPress={ubratToast} style={{marginLeft:10}}>
+            <Text style={{color:'#fff'}}>x</Text>
           </TouchableOpacity>
         </View>
       )}
 
-      <StatusBar style={dark ? 'light' : 'dark'} />
+      <StatusBar style={temnyi ? 'light' : 'dark'} />
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1 },
-  header: { paddingHorizontal: 16, paddingVertical: 12 },
-  headerTitle: { color: '#fff', fontSize: 20, fontWeight: '800' },
-  headerCode: { color: '#bfdbfe', marginTop: 4, fontSize: 13 },
-  syncTxt: { color: '#cbd5e1', marginTop: 4, fontSize: 11 },
-  content: { flex: 1 },
-  tabs: { flexDirection: 'row', borderTopWidth: 1 },
-  tab: { flex: 1, paddingVertical: 14, alignItems: 'center' },
+  shapka: { padding: 14, paddingTop: 10 },
+  zagolovok: { color: '#fff', fontSize: 22, fontWeight: 'bold' },
+  kod: { color: '#ccc', fontSize: 12, marginTop: 3 },
+  syncTxt: { color: '#aaa', fontSize: 11, marginTop: 2 },
+  tabBar: { flexDirection:'row', borderTopWidth:1 },
+  tabKn: { flex:1, paddingVertical: 12, alignItems:'center' },
   toast: {
-    position: 'absolute',
-    top: 80,
-    left: 16,
-    right: 16,
-    padding: 12,
-    borderRadius: 8,
-    flexDirection: 'row',
-    alignItems: 'center',
+    position:'absolute', top: 80, left: 16, right: 16,
+    padding: 12, borderRadius: 8, flexDirection:'row', alignItems:'center',
   },
 });
+

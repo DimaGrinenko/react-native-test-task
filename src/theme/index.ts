@@ -63,6 +63,27 @@ export const darkTheme: ThemeColors = {
   overlay: 'rgba(0, 0, 0, 0.6)',
 };
 
+export const STATUS_COLORS: Record<TaskStatus, { bg: string; text: string; dot: string }> = {
+  new: { bg: '#EEF2FF', text: '#4338CA', dot: '#6366F1' },
+  in_progress: { bg: '#FFFBEB', text: '#B45309', dot: '#F59E0B' },
+  completed: { bg: '#ECFDF5', text: '#047857', dot: '#10B981' },
+  cancelled: { bg: '#F1F5F9', text: '#475569', dot: '#94A3B8' },
+};
+
+export const STATUS_COLORS_DARK: Record<TaskStatus, { bg: string; text: string; dot: string }> = {
+  new: { bg: '#1E1B4B', text: '#A5B4FC', dot: '#818CF8' },
+  in_progress: { bg: '#422006', text: '#FCD34D', dot: '#FBBF24' },
+  completed: { bg: '#064E3B', text: '#6EE7B7', dot: '#34D399' },
+  cancelled: { bg: '#1E293B', text: '#94A3B8', dot: '#64748B' },
+};
+
+export const SYNC_COLORS = {
+  pending: { bg: '#FEF3C7', text: '#D97706', label: 'Ожидает' },
+  syncing: { bg: '#DBEAFE', text: '#2563EB', label: 'Синхронизация' },
+  synced: { bg: '#D1FAE5', text: '#059669', label: 'Синхронизировано' },
+  failed: { bg: '#FEE2E2', text: '#DC2626', label: 'Ошибка' },
+};
+
 export const ACTION_ICONS: Record<string, string> = {
   created: '✨',
   updated: '✏️',
@@ -72,4 +93,21 @@ export const ACTION_ICONS: Record<string, string> = {
   deleted: '❌',
   synced: '☁️',
   sync_failed: '⚠️',
+};
+
+export const shadows = {
+  card: {
+    shadowColor: '#6366F1',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+    elevation: 4,
+  },
+  fab: {
+    shadowColor: '#4F46E5',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.35,
+    shadowRadius: 10,
+    elevation: 8,
+  },
 };

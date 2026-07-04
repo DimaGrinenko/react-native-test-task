@@ -1,3 +1,36 @@
 {
-  "tasks": []
+  "tasks": [
+    {
+      "id": "sample_1",
+      "title": "Проверка оборудования",
+      "description": "Осмотр насосной станции на объекте А. Проверить давление, температуру и состояние уплотнений.",
+      "dueAt": "2026-07-10T14:00:00.000Z",
+      "location": {
+        "address": "ул. Садовая 5, Москва",
+        "latitude": 55.74,
+        "longitude": 37.6
+      },
+      "attachments": [],
+      "status": "new",
+      "syncStatus": "synced",
+      "createdAt": "2026-07-01T10:00:00.000Z",
+      "updatedAt": "2026-07-01T10:00:00.000Z"
+    },
+    {
+      "id": "sample_2",
+      "title": "Замена фильтра",
+      "description": "Заменить воздушный фильтр на складе, зафиксировать серийный номер.",
+      "dueAt": "2026-07-08T09:30:00.000Z",
+      "location": {
+        "address": "пр. Мира 25, Москва",
+        "latitude": 55.79,
+        "longitude": 37.63
+      },
+      "attachments": [],
+      "status": "in_progress",
+      "syncStatus": "synced",
+      "createdAt": "2026-06-28T08:00:00.000Z",
+      "updatedAt": "2026-07-02T11:00:00.000Z"
+    }
+  ]
 }
